@@ -1,98 +1,211 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function App() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+    // Estados 
+    const [nombre, setNombre]=useState (''); 
+    const [carros, setCarros]=useState (''); 
+    const [presupuesto,setPresupuesto]=useState ('');
+    const [precio, setPrecio]=useState (''); 
+    const [modalvisible, setModalvisible]=useState ('false'); 
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    //Funcion de botones 
+    const Realizar compra = () => {
+    // validamos campos que tengan informacion 
+    if(
+      nombre.trim() == '' || 
+      carros.trim() == '' || 
+      presupuesto.trim() == ''
+    ){
+      setResultados ('
+        debe completar todos los campos.
+        ')
+    }return;
+    //mostramos indicador de carga 
+    setProcesando (true);
+    setResultado (true);
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+    //simulacion del proceso 
+    setTimeout(() => {
+       setProcesando(false)
+       setResultado(
+        'cliente: ${nombre}
+        carros:${carros}
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+       )
+
+
+
+       // abrimos modal 
+
+
+
+
+
+
+
+
+       return(
+        keyboardaviodingview
+        style={styles.pantalla}
+        behavior=
+
+       )
+    })
+
+    }
+
+
+
+
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+
+      {/* Imagen principal */}
+      <Image
+        source={{
+          uri: 'https://cdn.motor1.com/images/mgl/Oo3mQo/s3/2023-dodge-charger-and-challenger-mopar-special-edition.jpg',
+        }}
+        style={styles.carImage}
+        resizeMode="cover"
+      />
+
+      {/* Degradado visual */}
+      <View style={styles.overlay} />
+
+      {/* Contenido */}
+      <View style={styles.content}>
+        <Text style={styles.smallTitle}>BIENVENIDO A</Text>
+
+        <Text style={styles.title}>CONCESIONARIO</Text>
+
+        <Text style={styles.subtitle}>
+          Encuentra el vehículo perfecto para ti.
+        </Text>
+
+        <Text style={styles.description}>
+          Explora nuestros vehículos, conoce sus características
+          y encuentra tu próximo automóvil.
+        </Text>
+
+        {/* Botón */}
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.8}
+          onPress={() => console.log('Comenzar presionado')}
+        >
+          <Text style={styles.buttonText}>COMENZAR</Text>
+          <Text style={styles.arrow}>→</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.footer}>
+          Ingeniería de Sistemas
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#000000',
   },
-  safeArea: {
+
+  carImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    height: '58%',
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '65%',
+    backgroundColor: 'rgba(0,0,0,0.25)',
+  },
+
+  content: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 28,
+    paddingBottom: 35,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  smallTitle: {
+    color: '#aaaaaa',
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 3,
+    marginBottom: 8,
   },
+
   title: {
+    color: '#ffffff',
+    fontSize: 36,
+    fontWeight: '900',
+    letterSpacing: 1,
+    marginBottom: 12,
+  },
+
+  subtitle: {
+    color: '#ffffff',
+    fontSize: 19,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+
+  description: {
+    color: '#a8a8a8',
+    fontSize: 14,
+    lineHeight: 21,
+    marginBottom: 25,
+    maxWidth: 330,
+  },
+
+  button: {
+    height: 58,
+    backgroundColor: '#ffffff',
+    borderRadius: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 25,
+    marginBottom: 25,
+  },
+
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '800',
+    letterSpacing: 1,
+  },
+
+  arrow: {
+    color: '#000000',
+    fontSize: 25,
+    fontWeight: '500',
+    marginLeft: 12,
+    marginTop: -2,
+  },
+
+  footer: {
+    color: '#555555',
+    fontSize: 12,
     textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
   },
 });
